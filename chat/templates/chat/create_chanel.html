@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ساخت کانال جدید</title>
+</head>
+<body>
+    <h1>ساخت کانال جدید</h1>
+    <form method="post" action="{% url 'process_channel_creation' %}">
+        {% csrf_token %}
+        <label for="channel_name">نام کانال:</label><br>
+        <input type="text" id="channel_name" name="channel_name" required><br><br>
+        <button type="submit">ساخت کانال</button>
+        <a href="{% url 'dashboard' %}">انصراف</a>
+    </form>
+</body>
+</html>

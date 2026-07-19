@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}چت‌ها{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+    {# base.html #}
+
+{# استایل‌های CSS برای .user-profile-nav, .nav-profile-pic, .online-dot را باید در فایل CSS اضافه کنید #}
+
+    <div class="container">
+    </div>
+        <div class="container">
+            <div class="chat-item">
+                <p>Serch</p>
+                <a href="{% url 'chat:start_chat' %}" class="new-chat-link">شروع چت جدید</a>
+                <button class="new-chat-link" ><a href="{% url 'chat:dashboard' %} ">اضافه کردن</a></button>
+            </div>
+
+
+
+    {% if chat_data %}
+        {% for item in chat_data %}
+            <div class="chat-item">
+                <a class="chat-avatar" 
+                href="{% url 'chat:chat_detail' item.chat.id %}">
+                    
+                                <!-- نمایش عکس پروفایل -->
+            {% if item.other_user.profile_picture %}
+                <img src="{{ item.other_user.profile_picture.url }}" alt="{{ item.other_user.username }}" class="profile-pic">
+            {% else %}
+                <!-- اگر عکسی نبود، یک عکس پیش‌فرض نشون بده -->
+                <img src="/media/default_profile.png" alt="Default" class="profile-pic">
+            {% endif %}
+            {{ item.other_user.username }}
+                </a>
+                {% if item.last_message %}
+                    <div class="last-message">
+                        {{ item.last_message.content|truncatechars:50 }}
+                    </div>
+                {% else %}
+                    <div class="last-message">
+                        شروع گفتگو...
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+
+    {% endif %}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست گروه‌ها</title>
+    <style>
+        /* استایل‌های ساده برای بهتر دیده شدن */
+        body {
+            font-family: 'Tahoma', sans-serif;
+            margin: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #e9ecef;
+            margin-bottom: 10px;
+            padding: 15px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        li:hover {
+            background-color: #dee2e6;
+            transform: translateX(-5px); /* افکت جزئی هنگام هاور */
+        }
+        a {
+            text-decoration: none;
+            color: inherit; /* رنگ لینک همرنگ متن لیست باشه */
+            display: block; /* باعث میشه کل آیتم لیست کلیک بشه */
+            width: 100%;
+            height: 100%;
+        }
+        .group-name {
+            font-weight: bold;
+        }
+        .group-details {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>گروه‌های من</h1>
+        
+        {% if groups %}
+            <ul>
+                {% for group in groups %}
+                    <li>
+                        <a href="{% url 'chat:chat_detail' chat_id=group.id %}">
+                            <span class="group-name">{{ group.name }}</span>
+                            {% if group.last_message %}
+                                <div class="group-details">
+                                    آخرین پیام: {{ group.last_message.content|truncatewords:10 }} - {{ group.last_message.timestamp|date:"H:i" }}
+                                </div>
+                            {% else %}
+                                <div class="group-details">
+                                    هنوز پیامی رد و بدل نشده.
+                                </div>
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="text-align: center; color: #6c757d;">شما هنوز گروهی نساختید.</p>
+        {% endif %}
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{% url 'chat:create_group' %}" style="padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none;">ساخت گروه جدید</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+</div>
+<script>
+    document.getElementById('create-group-btn').addEventListener('click', function() {
+    // اینجا کدی که می‌خواهید با کلیک اجرا شود را بنویسید
+    // مثلاً نمایش فرم ساخت گروه:
+    document.getElementById('group-creation-form').style.display = 'block';
+
+    // یا ارسال درخواست به سرور با AJAX
+    // fetch('/api/create-group/', { method: 'POST', ... })
+});
+
+</script>
+{% endblock %}
+
+
