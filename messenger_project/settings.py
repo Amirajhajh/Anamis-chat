@@ -56,11 +56,9 @@ ASGI_APPLICATION = 'messenger_project.asgi.application'
 # }
 
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            # ابتدا سعی می‌کند آدرس را از تنظیمات Render بخواند، 
-            # اگر نبود (در سیستم خودتان) از آدرس لوکال استفاده می‌کند
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
             "hosts": [os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379')],
         },
     },
