@@ -322,22 +322,6 @@ def process_group_message(request, chat_id):
 
 
 
-# تابع view برای نمایش جزئیات گروه (که باید در urls.py تعریف شده باشد)
-
-
-def create_channel_view(request):
-    """نمایش فرم ساخت کانال جدید."""
-    return render(request, 'chat/create_channel.html')
-
-def process_channel_creation_view(request):
-    """پردازش فرم ساخت کانال."""
-    if request.method == 'POST':
-        channel_name = request.POST.get('channel_name')
-        if channel_name:
-            Channel.objects.create(name=channel_name)
-            # return redirect(reverse('creation_success'))
-            return redirect(reverse('dashboard'))
-    return redirect(reverse('create_channel'))
 
 def dashboard_view(request):
     """یک ویو نمایشی برای داشبورد (به جای some_success_url)."""

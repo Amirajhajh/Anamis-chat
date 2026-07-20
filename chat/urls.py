@@ -33,12 +33,6 @@ urlpatterns = [
         # URL های گروه
     path('groups/create/', views.create_group_view, name='create_group'),
     path('groups/process_create/', views.process_group_creation_view, name='process_group_creation'),
-
-        # URL های کانال
-    path('channels/new/', views.create_channel_view, name='create_channel'),
-    path('channels/create/', views.process_channel_creation_view, name='process_channel_creation'),
-
-        # URL داشبورد
     path('dashboard/', views.dashboard_view, name='dashboard'),
 
         # URL برای لیست چت ها

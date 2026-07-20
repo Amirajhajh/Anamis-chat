@@ -20,15 +20,5 @@
     {% endfor %}
 </ul>
 
-    <h2>کانال‌ها</h2>
-    <a href="{% url 'chat:create_channel' %}">ساخت کانال جدید</a>
-    <ul>
-        {% for channel in channels %}
-            <li>{{ channel.name }}</li>
-        {% empty %}
-            <li>هیچ کانالی یافت نشد.</li>
-        {% endfor %}
-    </ul>
-
 </body>
 </html>
