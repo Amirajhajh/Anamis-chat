@@ -21,6 +21,8 @@ CSRF_TRUSTED_ORIGINS = ['https://*.loca.lt', 'http://localhost:8080', 'https://y
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'rest_framework',
     # ... default apps ...
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,8 +37,7 @@ INSTALLED_APPS = [
     'chat',
 
     # Third-party
-    'channels',
-    'rest_framework',
+    
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -45,11 +46,22 @@ AUTH_USER_MODEL = 'accounts.User'
 
 ASGI_APPLICATION = 'messenger_project.asgi.application'
 
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("127.0.0.1", 6379)], # آدرس Redis شما
+#         },
+#     },
+# }
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)], # آدرس Redis شما
+            # ابتدا سعی می‌کند آدرس را از تنظیمات Render بخواند، 
+            # اگر نبود (در سیستم خودتان) از آدرس لوکال استفاده می‌کند
+            "hosts": [os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379')],
         },
     },
 }
