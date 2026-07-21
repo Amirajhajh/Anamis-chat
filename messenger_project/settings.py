@@ -21,9 +21,11 @@ CSRF_TRUSTED_ORIGINS = ['https://*.loca.lt', 'http://localhost:8080', 'https://y
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
+    'daphne',  # <--- بسیار حیاتی: حتماً اولین مورد باشد
+    'channels', 
     'rest_framework',
-    # ... default apps ...
+    
+    # Default Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,26 +37,15 @@ INSTALLED_APPS = [
     'core',
     'accounts',
     'chat',
-
-    # Third-party
-    
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
 
-
-
+# مسیر ASGI شما درست است
 ASGI_APPLICATION = 'messenger_project.asgi.application'
 
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [("127.0.0.1", 6379)], # آدرس Redis شما
-#         },
-#     },
-# }
-
+# تنظیمات Redis با پشتیبانی از محیط Render
+# نکته: در Render معمولاً Redis از پروتکل rediss:// (با دو s) استفاده می‌کند (امن)
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -73,7 +64,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ROOT_URLCONF = 'messenger_project.urls'
 
 # TEMPLATES = [
